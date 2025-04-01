@@ -1,0 +1,15 @@
+@import "tailwindcss";
+/* Wireframe help */
+*,
+*::after,
+*::before {
+  outline: 1px solid red;
+}
+/*CSS variables: */
+:root {
+  --deep-red: #780000;
+  --crimson: #c1121f;
+  --cream: #fdf0d5;
+  --navy-blue: #003049;
+  --soft-blue: #669bbc;
+}
