@@ -7,8 +7,11 @@ export const Converter = () => {
   const [userInput, setUserInput] = useState({
     amount: 100,
     fromCurr: "",
+    fromCountryCode: "",
     toCurr: "",
+    toCountryCode: "",
   });
+  console.log(userInput);
   const [convertedAmt, setConvertedAmt] = useState("");
   const [exchangeRates, setExchangeRates] = useState("");
   function handleChange(e) {
