@@ -21,11 +21,13 @@ export const Converter = () => {
   }
   async function getData() {
     try {
-      const response = await axios.get(
-        `${baseURL}/currencies/${userInput.fromCurr}.json`
-      );
-      if (response.status === 200) {
-        setExchangeRates(response.data);
+      if (userInput.amount && userInput.fromCurr && userInput.toCurr) {
+        const response = await axios.get(
+          `${baseURL}/currencies/${userInput.fromCurr}.json`
+        );
+        if (response.status === 200) {
+          setExchangeRates(response.data);
+        }
       }
     } catch (error) {
       console.log("Error calling Currency exchange API:", error);
@@ -49,7 +51,7 @@ export const Converter = () => {
           onChange={(e) => {
             handleChange(e);
           }}
-          type="text"
+          type="number"
           name="amount"
           id="amount"
           className="border"
