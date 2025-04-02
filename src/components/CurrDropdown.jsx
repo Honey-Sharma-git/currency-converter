@@ -23,7 +23,7 @@ export const CurrDropdown = ({ handleChange, userInput }) => {
             <option value="From Currency">From Currency</option>
             {currSymbolData.map((symbol, index) => {
               return (
-                <option key={index} value={symbol.countryCode}>
+                <option key={index} value={symbol.currencyCode.toLowerCase()}>
                   {symbol.name} {symbol.countryCode}
                 </option>
               );
@@ -51,7 +51,7 @@ export const CurrDropdown = ({ handleChange, userInput }) => {
             <option value="To currency">To Currency</option>
             {currSymbolData.map((symbol, index) => {
               return (
-                <option key={index} value={symbol.countryCode}>
+                <option key={index} value={symbol.currencyCode.toLowerCase()}>
                   {symbol.name} {symbol.countryCode}
                 </option>
               );
