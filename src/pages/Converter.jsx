@@ -5,6 +5,7 @@ export const Converter = () => {
   const baseURL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@";
   const [conversionFactor, setConversionFactor] = useState("");
   const [exchangeRates, setExchangeRates] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [userInput, setUserInput] = useState({
     amount: 100,
     fromCurr: "",
@@ -34,6 +35,7 @@ export const Converter = () => {
           ? `${baseURL}${userInput.date}/v1/currencies/${userInput.fromCurr}.json`
           : `${baseURL}latest/v1/currencies/${userInput.fromCurr}.json`;
 
+        setIsLoading(true);
         const response = await axios.get(URL);
         if (response.status === 200) {
           setExchangeRates(response.data);
@@ -41,13 +43,15 @@ export const Converter = () => {
       }
     } catch (error) {
       console.log("Error calling Currency exchange API:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    if (userInput.fromCurr && userInput.toCurr && exchangeRates) {
+    if (exchangeRates) {
       setConversionFactor(
-        exchangeRates[userInput.fromCurr]?.[userInput.toCurr] || "N/A"
+        exchangeRates[userInput.fromCurr]?.[userInput.toCurr]
       );
     }
   }, [exchangeRates]);
@@ -95,11 +99,13 @@ export const Converter = () => {
           }}
           className="border cursor-pointer"
         >
-          Get exchange rate
+          Convert amount
         </button>
 
         <p className="text-center border-dashed border p-2">
-          {conversionFactor
+          {isLoading
+            ? "Loading..."
+            : conversionFactor
             ? (conversionFactor * userInput.amount).toFixed(2)
             : "Result will appear here"}
         </p>
