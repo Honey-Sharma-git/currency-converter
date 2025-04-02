@@ -46,7 +46,7 @@ export const Converter = () => {
         <legend className="text-center font-bold text-2xl">
           Currency converter
         </legend>
-        
+
         <label htmlFor="amount">Enter amount:</label>
         <input
           onChange={(e) => {
@@ -58,9 +58,9 @@ export const Converter = () => {
           className="border"
           value={userInput.amount}
         />
-
-        <CurrDropdown userInput={userInput} handleChange={handleChange} />
-
+        <div className="flex flex-row gap-3">
+          <CurrDropdown userInput={userInput} handleChange={handleChange} />
+        </div>
         <button
           onClick={(e) => {
             e.preventDefault();
