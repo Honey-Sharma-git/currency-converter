@@ -9,20 +9,32 @@ export const Converter = () => {
     amount: 100,
     fromCurr: "",
     toCurr: "",
+    date: "",
   });
+
+  const date = new Date();
+  const currDate = date.getDate();
+  const currMonth = date.getMonth();
+  const currYear = date.getFullYear();
+  const completeDateStr = `${currYear.toString()}-${(currMonth + 1)
+    .toString()
+    .padStart(2, "0")}-${currDate.toString().padStart(2, "0")}`;
+  console.log(completeDateStr);
 
   function handleChange(e) {
     setUserInput((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   }
-
+  console.log(userInput);
   async function getData() {
     try {
       if (userInput.amount && userInput.fromCurr && userInput.toCurr) {
-        const response = await axios.get(
-          `${baseURL}latest/v1/currencies/${userInput.fromCurr}.json`
-        );
+        const URL = userInput.date
+          ? `${baseURL}${userInput.date}/v1/currencies/${userInput.fromCurr}.json`
+          : `${baseURL}latest/v1/currencies/${userInput.fromCurr}.json`;
+
+        const response = await axios.get(URL);
         if (response.status === 200) {
           setExchangeRates(response.data);
         }
@@ -60,6 +72,21 @@ export const Converter = () => {
         />
         <div className="flex flex-row gap-3">
           <CurrDropdown userInput={userInput} handleChange={handleChange} />
+        </div>
+        <div className="flex flex-row  gap-3 ">
+          <label className="w-full " htmlFor="date">
+            Conversion as on date:
+          </label>
+          <input
+            className="border w-full"
+            type="date"
+            name="date"
+            id="date"
+            max={completeDateStr}
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
         </div>
         <button
           onClick={(e) => {
